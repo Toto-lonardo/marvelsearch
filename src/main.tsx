@@ -7,6 +7,7 @@ import "./index.css";
 import ErrorPage from "./error-page.tsx";
 import App from "./App.tsx";
 import ProductGrid from "./features/product-list/components/ProductGrid.tsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 // import App from "./App.tsx";
 
 const router = createBrowserRouter([
