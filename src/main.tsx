@@ -6,7 +6,7 @@ import Root from "./routes/root.jsx";
 import "./index.css";
 import ErrorPage from "./error-page.tsx";
 import App from "./App.tsx";
-import ProductGrid from "./features/product-list/components/ProductGrid.tsx";
+import CharacterGrid from "./features/character-list/components/CharacterGrid.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import App from "./App.tsx";
 
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "products/",
-    element: <ProductGrid />,
+    path: "character/",
+    element: <CharacterGrid />,
   },
 ]);
 
