@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import Footer from "./shared/Footer";
-// import PaginationBasic from "./shared/Pagination";
 import "./App.css";
 
-import { Container, Row, Col, Pagination } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import PaginationComponent from "./shared/Pagination";
 
 function App() {
   const [posts, setPosts] = useState<apiInterfaces.Post | undefined>(undefined);
@@ -16,7 +16,6 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const apikey = import.meta.env.VITE_MARVEL_API_KEY;
   const apiurl = import.meta.env.VITE_MARVEL_API;
-  const [isMobile, setIsMobile] = useState(window.innerWidth);
   useEffect(() => {
     console.log(searchChar);
     const getData = setTimeout(() => {
@@ -47,33 +46,6 @@ function App() {
     return () => clearTimeout(getData);
   }, [searchChar, offset]);
 
-  let items = [];
-  if (!posts || !posts.data || !posts.data.total || !posts.data.limit) {
-  } else {
-    const totalPages = ~~(posts?.data?.total / posts?.data?.limit);
-    let active = currentPage;
-    for (let number = 0; number <= totalPages; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === active}
-          onClick={() => handleClick(number)}
-        >
-          {number + 1}
-        </Pagination.Item>,
-      );
-    }
-  }
-  function handleClick(number: number) {
-    if (number != currentPage) {
-      setPosts(undefined);
-      setCurrentPage(number);
-      let limitPost = Number(posts?.data?.limit);
-      setOffset(number * limitPost);
-    } else {
-      return;
-    }
-  }
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     setPosts(undefined);
     setSearchChar(e.target.value);
@@ -128,57 +100,68 @@ function App() {
                   </Col>
                 );
               })}
-              <Row className="justify-content-center p-4 ">
-                {items.length > 1 && (
-                  <Pagination className="col-auto mx-auto">
-                    {currentPage !== 0 && (
-                      <>
-                        <Pagination.First onClick={() => handleClick(0)} />
-                        <Pagination.Prev
-                          onClick={() => handleClick(currentPage - 1)}
-                        />
-                      </>
-                    )}
-                    {currentPage > 2 ? (
-                      <>
-                        <Pagination.Item onClick={() => handleClick(0)}>
-                          1
-                        </Pagination.Item>
-                        <Pagination.Ellipsis />
-                        {items.slice(currentPage - 1, currentPage + 2)}
-                        {currentPage < items.length - 2 && (
-                          <>
-                            <Pagination.Ellipsis />
-                            {items.slice(items.length - 1)}
-                          </>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {items.slice(0, currentPage + 2)}
-                        {currentPage < items.length - 2 && (
-                          <>
-                            <Pagination.Ellipsis />
-                            {items.slice(items.length - 1)}
-                          </>
-                        )}
-                      </>
-                    )}
-                    {currentPage != items.length - 1 && (
-                      <>
-                        <Pagination.Next
-                          onClick={() => handleClick(currentPage + 1)}
-                        />
-                        {currentPage !== items.length && (
-                          <Pagination.Last
-                            onClick={() => handleClick(items.length - 1)}
-                          />
-                        )}
-                      </>
-                    )}
-                  </Pagination>
-                )}
-              </Row>
+              {posts.data.count > 1 && (
+                <PaginationComponent
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  posts={posts}
+                  setPosts={setPosts}
+                  setOffset={setOffset}
+                />
+              )}
+              {/* <Row className="justify-content-center p-4 "> */}
+              {/*   <Pagination className="col-auto mx-auto"> */}
+              {/*     {currentPage !== 0 && ( */}
+              {/*       <> */}
+              {/*         <Pagination.First onClick={() => handleClick(0)} /> */}
+              {/*         <Pagination.Prev */}
+              {/*           onClick={() => handleClick(currentPage - 1)} */}
+              {/*         /> */}
+              {/*       </> */}
+              {/*     )} */}
+              {/*     {currentPage > 2 ? ( */}
+              {/*       <> */}
+              {/*         <Pagination.Item onClick={() => handleClick(0)}> */}
+              {/*           1 */}
+              {/*         </Pagination.Item> */}
+              {/*         <Pagination.Ellipsis /> */}
+              {/*         {items.slice(currentPage - 1, currentPage + 2)} */}
+              {/*         {currentPage < items.length - 2 && ( */}
+              {/*           <> */}
+              {/*             <Pagination.Ellipsis /> */}
+              {/*             {items.slice(items.length - 1)} */}
+              {/*           </> */}
+              {/*         )} */}
+              {/*       </> */}
+              {/*     ) : ( */}
+              {/*       <> */}
+              {/*         {items.slice(0, currentPage + 2)} */}
+              {/*         {currentPage < items.length - 2 && ( */}
+              {/*           <> */}
+              {/*             <Pagination.Ellipsis /> */}
+              {/*             {items.slice(items.length - 1)} */}
+              {/*           </> */}
+              {/*         )} */}
+              {/*       </> */}
+              {/*     )} */}
+              {/*     {currentPage != items.length - 1 && ( */}
+              {/*       <> */}
+              {/*         <Pagination.Next */}
+              {/*           onClick={() => handleClick(currentPage + 1)} */}
+              {/*         /> */}
+              {/*         {currentPage !== items.length && ( */}
+              {/*           <Pagination.Last */}
+              {/*             onClick={() => handleClick(items.length - 1)} */}
+              {/*           /> */}
+              {/*         )} */}
+              {/*       </> */}
+              {/*     )} */}
+              {/*   </Pagination> */}
+              {posts?.data?.count == 0 && (
+                <Row className="">
+                  <h2 className="text-center ">No results</h2>
+                </Row>
+              )}
             </>
           ) : (
             <Row className="d-flex justify-content-center align-items-center min-vh-100">
