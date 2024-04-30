@@ -9,45 +9,61 @@ import "./App.css";
 import { Container, Row, Col } from "react-bootstrap";
 import PaginationComponent from "./shared/Pagination";
 
+import { useFetchComicsQuery } from "./features/characters/characters-api-slice";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { incremented, amountAdded } from "./features/counter/counter-slice";
+
 function App() {
+  //esempioRedux
+
+  const { data, isFetching } = useFetchComicsQuery();
+  console.log(data?.code);
+
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
+  function handleClickCounter() {
+    dispatch(amountAdded(3));
+  }
+
+  //fineesempio
   const [posts, setPosts] = useState<apiInterfaces.Post | undefined>(undefined);
   const [searchChar, setSearchChar] = useState("");
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const apikey = import.meta.env.VITE_MARVEL_API_KEY;
   const apiurl = import.meta.env.VITE_MARVEL_API;
-  useEffect(() => {
-    console.log(searchChar);
-    const getData = setTimeout(() => {
-      searchChar === ""
-        ? axios
-            .get(
-              `${apiurl}characters?limit=20&offset=${offset}&apikey=${apikey}`,
-            )
-            .then((response) => {
-              console.log(response.data);
-              setPosts(response.data);
-            })
-            .catch((error) => {
-              console.error(error);
-            })
-        : axios
-            .get(
-              `${apiurl}characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`,
-            )
-            .then((response) => {
-              console.log(response.data);
-              setPosts(response.data);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-    }, 2000);
-    return () => clearTimeout(getData);
-  }, [searchChar, offset]);
+  // useEffect(() => {
+  //   console.log(searchChar);
+  //   const getData = setTimeout(() => {
+  //     searchChar === ""
+  //       ? axios
+  //           .get(
+  //             `${apiurl}characters?limit=20&offset=${offset}&apikey=${apikey}`,
+  //           )
+  //           .then((response) => {
+  //             console.log(response.data);
+  //             setPosts(response.data);
+  //           })
+  //           .catch((error) => {
+  //             console.error(error);
+  //           })
+  //       : axios
+  //           .get(
+  //             `${apiurl}characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`,
+  //           )
+  //           .then((response) => {
+  //             console.log(response.data);
+  //             setPosts(response.data);
+  //           })
+  //           .catch((error) => {
+  //             console.error(error);
+  //           });
+  //   }, 2000);
+  //   return () => clearTimeout(getData);
+  // }, [searchChar, offset]);
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    setPosts(undefined);
+    // setposts(undefined);
     setSearchChar(e.target.value);
     setOffset(0);
     console.log(offset);
@@ -60,6 +76,17 @@ function App() {
         <Row className="justify-content-md-center">
           <Col className="my-2">
             <h1 className="text-center display-3">Marvelpedia</h1>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center">
+          <Col className="my-2">
+            <h1 className="text-center ">Counter</h1>
+            <button onClick={handleClickCounter}>Count: {count}</button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <p>Number of characters fetched: {data?.data.limit}</p>
           </Col>
         </Row>
         <Row className="justify-content-center ">
@@ -80,9 +107,9 @@ function App() {
           </Row>
         </Row>
         <Row className="justify-content-center ">
-          {posts ? (
+          {data ? (
             <>
-              {posts?.data?.results?.map((post: apiInterfaces.Result) => {
+              {data?.data?.results?.map((post: apiInterfaces.Result) => {
                 return (
                   <Col key={post.id} className="my-2 col-auto ">
                     <Card style={{ width: "18rem" }}>
@@ -100,11 +127,11 @@ function App() {
                   </Col>
                 );
               })}
-              {posts.data.count > 1 && (
+              {data.data.count > 1 && (
                 <PaginationComponent
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
-                  posts={posts}
+                  posts={data}
                   setPosts={setPosts}
                   setOffset={setOffset}
                 />
@@ -157,7 +184,7 @@ function App() {
               {/*       </> */}
               {/*     )} */}
               {/*   </Pagination> */}
-              {posts?.data?.count == 0 && (
+              {data?.data?.count == 0 && (
                 <Row className="">
                   <h2 className="text-center ">No results</h2>
                 </Row>
