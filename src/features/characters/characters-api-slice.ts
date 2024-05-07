@@ -5,6 +5,11 @@ const apiurl = import.meta.env.VITE_MARVEL_API;
 
 const apikey = import.meta.env.VITE_MARVEL_API_KEY;
 
+type args = {
+  searchChar: string;
+  offset: number;
+};
+
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
@@ -12,13 +17,20 @@ export const apiSlice = createApi({
   }),
   endpoints(builder) {
     return {
-      fetchComics: builder.query<apiInterfaces.Post, number | void>({
-        query(limit = 20, offset = 0) {
-          return `characters?limit=${limit}&offset=${offset}&apikey=${apikey}`;
+      fetchCharacters: builder.query<apiInterfaces.Post, number | void>({
+        query(offset = 0) {
+          return `characters?&limit=20&offset=${offset}&apikey=${apikey}`;
+        },
+      }),
+      fetchCharactersBySearch: builder.query<apiInterfaces.Post, args>({
+        query(args) {
+          const { searchChar = "", offset = 0 }: args = args;
+          return `characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`;
         },
       }),
     };
   },
 });
 
-export const { useFetchComicsQuery } = apiSlice;
+export const { useFetchCharactersQuery, useFetchCharactersBySearchQuery } =
+  apiSlice;

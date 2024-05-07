@@ -1,40 +1,41 @@
+import React, { FunctionComponent } from "react";
 import { Row, Pagination } from "react-bootstrap";
+import * as apiInterface from "../utils/interface";
 
-export default function PaginationComponent({
+type PaginationProps = {
+  currentPage: number;
+  posts: apiInterface.Post;
+  handleClick: FunctionComponent<number>;
+};
+
+const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,
   posts,
-  setPosts,
-  setCurrentPage,
-  setOffset,
-}) {
+  handleClick,
+}) => {
   let items = [];
   if (!posts || !posts.data || !posts.data.total || !posts.data.limit) {
   } else {
     const totalPages = ~~(posts?.data?.total / posts?.data?.limit);
-    let active = currentPage;
+    console.log("Total pages:", totalPages);
     for (let number = 0; number <= totalPages; number++) {
       items.push(
         <Pagination.Item
           key={number}
-          active={number === active}
+          active={number === currentPage}
           onClick={() => handleClick(number)}
         >
           {number + 1}
         </Pagination.Item>,
       );
     }
+    if (posts.data.total % posts.data.limit === 0) {
+      items.pop();
+    }
+    console.log("Items lenght:", items.length);
+    console.log("currentPage:", currentPage);
   }
 
-  function handleClick(number: number) {
-    if (number != currentPage) {
-      setPosts(undefined);
-      setCurrentPage(number);
-      let limitPost = Number(posts?.data?.limit);
-      setOffset(number * limitPost);
-    } else {
-      return;
-    }
-  }
   return (
     <Row className="justify-content-center p-4 ">
       <Pagination className="col-auto mx-auto">
@@ -66,7 +67,7 @@ export default function PaginationComponent({
             )}
           </>
         )}
-        {currentPage != items.length - 1 && (
+        {currentPage !== items.length - 1 && (
           <>
             <Pagination.Next onClick={() => handleClick(currentPage + 1)} />
           </>
@@ -74,4 +75,6 @@ export default function PaginationComponent({
       </Pagination>
     </Row>
   );
-}
+};
+
+export default PaginationComponent;
