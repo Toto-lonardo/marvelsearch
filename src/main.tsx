@@ -5,7 +5,6 @@ import { store } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // @ts-ignore
 import Root from "./routes/root.jsx";
-import "./index.css";
 import ErrorPage from "./error-page.tsx";
 import App from "./App";
 import CharacterGrid from "./features/character-list/components/CharacterGrid.tsx";

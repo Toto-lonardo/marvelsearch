@@ -4,20 +4,19 @@ import * as apiInterface from "../utils/interface";
 
 type PaginationProps = {
   currentPage: number;
-  posts: apiInterface.Post;
+  pages: apiInterface.ApiResponse;
   handleClick: FunctionComponent<number>;
 };
 
 const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,
-  posts,
+  pages,
   handleClick,
 }) => {
   let items = [];
-  if (!posts || !posts.data || !posts.data.total || !posts.data.limit) {
+  if (!pages || !pages.data || !pages.data.total || !pages.data.limit) {
   } else {
-    const totalPages = ~~(posts?.data?.total / posts?.data?.limit);
-    console.log("Total pages:", totalPages);
+    const totalPages = ~~(pages.data.total / pages.data.limit);
     for (let number = 0; number <= totalPages; number++) {
       items.push(
         <Pagination.Item
@@ -29,11 +28,9 @@ const PaginationComponent: React.FC<PaginationProps> = ({
         </Pagination.Item>,
       );
     }
-    if (posts.data.total % posts.data.limit === 0) {
+    if (pages.data.total % pages.data.limit === 0) {
       items.pop();
     }
-    console.log("Items lenght:", items.length);
-    console.log("currentPage:", currentPage);
   }
 
   return (

@@ -17,12 +17,12 @@ export const apiSlice = createApi({
   }),
   endpoints(builder) {
     return {
-      fetchCharacters: builder.query<apiInterfaces.Post, number | void>({
+      fetchCharacters: builder.query<apiInterfaces.ApiResponse, number | void>({
         query(offset = 0) {
           return `characters?&limit=20&offset=${offset}&apikey=${apikey}`;
         },
       }),
-      fetchCharactersBySearch: builder.query<apiInterfaces.Post, args>({
+      fetchCharactersBySearch: builder.query<apiInterfaces.ApiResponse, args>({
         query(args) {
           const { searchChar = "", offset = 0 }: args = args;
           return `characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`;
