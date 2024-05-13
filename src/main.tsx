@@ -7,8 +7,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/root.jsx";
 import ErrorPage from "./error-page.tsx";
 import App from "./App";
-import CharacterGrid from "./features/character-list/components/CharacterGrid.tsx";
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CharacterDetailPage from "./features/character-list/containers/CharacterDetailPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,8 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "character/",
-    element: <CharacterGrid />,
+    path: "character/:id",
+    element: <CharacterDetailPage />,
   },
 ]);
 

@@ -1,22 +1,21 @@
-import React, { FunctionComponent } from "react";
 import { Row, Pagination } from "react-bootstrap";
-import * as apiInterface from "../utils/interface";
+import * as apiInterface from "../utils/charInterface";
 
 type PaginationProps = {
   currentPage: number;
-  pages: apiInterface.ApiResponse;
-  handleClick: FunctionComponent<number>;
+  pages: apiInterface.Data;
+  handleClick: (number: number) => void;
 };
 
-const PaginationComponent: React.FC<PaginationProps> = ({
+const PaginationComponent = ({
   currentPage,
   pages,
   handleClick,
-}) => {
+}: PaginationProps) => {
   let items = [];
-  if (!pages || !pages.data || !pages.data.total || !pages.data.limit) {
+  if (!pages || !pages || !pages.total || !pages.limit) {
   } else {
-    const totalPages = ~~(pages.data.total / pages.data.limit);
+    const totalPages = ~~(pages.total / pages.limit);
     for (let number = 0; number <= totalPages; number++) {
       items.push(
         <Pagination.Item
@@ -28,7 +27,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
         </Pagination.Item>,
       );
     }
-    if (pages.data.total % pages.data.limit === 0) {
+    if (pages.total % pages.limit === 0) {
       items.pop();
     }
   }
