@@ -3,11 +3,10 @@ import Spinner from "react-bootstrap/Spinner";
 import * as apiInterfaces from "../../../utils/charInterface";
 import PaginationComponent from "../../../shared/Pagination";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { current } from "@reduxjs/toolkit";
-import charSlice from "../../counter/char-slice";
 import { store } from "../../../app/store";
+import { Link } from "react-router-dom";
 
-type charInfo = {
+type charInfoType = {
   name: string;
   description: string;
 };
@@ -25,26 +24,30 @@ const CharacterGrid = ({
   isFetching,
   currentPage,
 }: CharacterGridsProps) => {
-  const char = useAppSelector((charinfo) => charinfo.char);
+  const char = useAppSelector((charInfo) => charInfo.char);
   const dispatch = useAppDispatch();
-  function saveCharInfo(charinfo) {
-    dispatch({ type: "char/save", payload: charinfo });
+  function saveCharInfo(charInfo: charInfoType) {
+    dispatch({ type: "char/save", payload: charInfo });
   }
-  let charinfo: charInfo = {
-    name: "",
-    description: "",
-  };
+  function resetCharinfo() {
+    dispatch({ type: "char/reset" });
+  }
 
-  function charHandleClick(character) {
-    const filterChar = data?.results.filter((sel) => sel.id === character);
-    let charinfo = {
-      name: filterChar[0].name,
-      description: filterChar[0].description,
+  function charHandleClick(character: number) {
+    let charInfo: charInfoType = {
+      name: "",
+      description: "",
     };
-    saveCharInfo(charinfo);
+    const filterChar = data?.results.filter((sel) => sel.id === character);
+    !filterChar?.length
+      ? resetCharinfo()
+      : (charInfo = {
+          name: filterChar[0].name,
+          description: filterChar[0].description,
+        });
+    saveCharInfo(charInfo);
   }
   console.log("Selezionato", store.getState().char);
-  console.log(char);
   return (
     <Row className="justify-content-center ">
       {data && !isFetching ? (
@@ -67,13 +70,15 @@ const CharacterGrid = ({
                     <Card.Text className="longtext">
                       {character.description}
                     </Card.Text>
-                    <Button
-                      variant="primary"
-                      value={character.id}
-                      onClick={() => charHandleClick(character.id)}
-                    >
-                      Update Value
-                    </Button>
+                    <Link to={`/character/${character.id}`}>
+                      <Button
+                        variant="primary"
+                        value={character.id}
+                        onClick={() => charHandleClick(character.id)}
+                      >
+                        Update Value
+                      </Button>
+                    </Link>
                   </Card.Body>
                 </Card>
               </Col>
