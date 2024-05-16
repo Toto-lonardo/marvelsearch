@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 type charInfoType = {
   name: string;
   description: string;
+  image: string;
 };
 
 type CharacterGridsProps = {
@@ -24,7 +25,6 @@ const CharacterGrid = ({
   isFetching,
   currentPage,
 }: CharacterGridsProps) => {
-  const char = useAppSelector((charInfo) => charInfo.char);
   const dispatch = useAppDispatch();
   function saveCharInfo(charInfo: charInfoType) {
     dispatch({ type: "char/save", payload: charInfo });
@@ -37,6 +37,7 @@ const CharacterGrid = ({
     let charInfo: charInfoType = {
       name: "",
       description: "",
+      image: "",
     };
     const filterChar = data?.results.filter((sel) => sel.id === character);
     !filterChar?.length
@@ -44,6 +45,7 @@ const CharacterGrid = ({
       : (charInfo = {
           name: filterChar[0].name,
           description: filterChar[0].description,
+          image: `${filterChar[0].thumbnail.path}.${filterChar[0].thumbnail.extension}`,
         });
     saveCharInfo(charInfo);
   }
@@ -70,13 +72,14 @@ const CharacterGrid = ({
                     <Card.Text className="longtext">
                       {character.description}
                     </Card.Text>
-                    <Link to={`/character/${character.id}`}>
+                    <Link to={`/character/${character.id}`} className="mx-auto">
                       <Button
-                        variant="primary"
+                        variant="danger"
                         value={character.id}
+                        className=""
                         onClick={() => charHandleClick(character.id)}
                       >
-                        Update Value
+                        Learn more
                       </Button>
                     </Link>
                   </Card.Body>

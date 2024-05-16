@@ -1,9 +1,6 @@
 import { useParams } from "react-router-dom";
 import { HeaderComp } from "../../../shared/HeaderComp";
-import {
-  useFetchCharacterByIdQuery,
-  useFetchComicsCharacterByIdQuery,
-} from "../../characters/characters-api-slice";
+import { useFetchComicsCharacterByIdQuery } from "../../characters/characters-api-slice";
 import Footer from "../../../shared/Footer";
 import * as charApiInterfaces from "../../../utils/charInterface";
 import * as comicApiInterfaces from "../../../utils/comicInterface";
@@ -19,6 +16,8 @@ export default function CharacterDetailPage() {
     <>
       <HeaderComp />
       <h1>{store.getState().char.name}</h1>
+      <h3>{store.getState().char.description}</h3>
+      <Image src={store.getState().char.image} width={200} />
       {data?.data.results.map((comic: comicApiInterfaces.Result) => {
         return (
           <Col key={comic.id}>
