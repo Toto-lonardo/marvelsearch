@@ -51,7 +51,7 @@ const CharacterGrid = ({
   }
   console.log("Selezionato", store.getState().char);
   return (
-    <Row className="justify-content-center ">
+    <Row className=" justify-content-center ">
       {data && !isFetching ? (
         <>
           <Row className="my-4">
@@ -59,34 +59,54 @@ const CharacterGrid = ({
               Number of characters : {data.total}
             </small>
           </Row>
-          {data.results.map((character: apiInterfaces.Result) => {
-            return (
-              <Col key={character.id} className="my-2 col-auto ">
-                <Card style={{ width: "18rem" }}>
-                  <Card.Img
-                    variant="top"
-                    src={`${character?.thumbnail?.path}.${character?.thumbnail?.extension}`}
-                  />
-                  <Card.Body className="card">
-                    <Card.Title className="h2">{character.name}</Card.Title>
-                    <Card.Text className="longtext">
-                      {character.description}
-                    </Card.Text>
-                    <Link to={`/character/${character.id}`} className="mx-auto">
-                      <Button
-                        variant="danger"
-                        value={character.id}
-                        className=""
-                        onClick={() => charHandleClick(character.id)}
+          <Row
+            xs={1}
+            md={2}
+            lg={4}
+            className="justify-content-center align-items-center"
+          >
+            {data.results.map((character: apiInterfaces.Result) => {
+              return (
+                <Col key={character.id} className="my-2">
+                  <Card
+                    style={{ width: "18rem", aspectRatio: 2 / 3 }}
+                    className="shadow mx-auto "
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={`${character?.thumbnail?.path}.${character?.thumbnail?.extension}`}
+                      className="flex-grow-1"
+                      style={{ maxHeight: "18rem" }}
+                    />
+                    <Card.Body className="d-flex flex-column align-items-center justify-content-around">
+                      <Card.Title className="border-bottom border-1 border-secondary">
+                        {character.name}
+                      </Card.Title>
+                      <Card.Text
+                        className="text-truncate"
+                        style={{ maxWidth: "16rem" }}
                       >
-                        Learn more
-                      </Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+                        {character.description}
+                      </Card.Text>
+                      <Link
+                        to={`/character/${character.id}`}
+                        className="mx-auto"
+                      >
+                        <Button
+                          variant="danger"
+                          value={character.id}
+                          className="shadow-sm mt-auto"
+                          onClick={() => charHandleClick(character.id)}
+                        >
+                          Learn more
+                        </Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
           {data.total > data.limit && (
             <PaginationComponent
               pages={data}

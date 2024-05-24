@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counter-slice";
-import charReducer from "../features/counter/char-slice";
+import charReducer from "../features/char/char-slice";
 import { apiSlice } from "../features/characters/characters-api-slice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     char: charReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },

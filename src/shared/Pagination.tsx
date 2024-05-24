@@ -33,7 +33,7 @@ const PaginationComponent = ({
   }
 
   return (
-    <Row className="justify-content-center p-4 ">
+    <Row className="justify-content-center align-items-center mt-4 pt-2">
       <Pagination className="col-auto mx-auto">
         {currentPage !== 0 && (
           <>

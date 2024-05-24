@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import * as charApiInterfaces from "../../utils/charInterface";
 import * as comicApiInterfaces from "../../utils/comicInterface";
-import { ReactNode } from "react";
 
 const apiurl = import.meta.env.VITE_MARVEL_API;
 
