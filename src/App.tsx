@@ -14,8 +14,6 @@ import SearchInput from "./features/character-list/components/SearchInput";
 import CharacterGrid from "./features/character-list/components/CharacterGrid";
 
 function App() {
-  //esempioRedux
-
   const [input, setInput] = useState("");
   const [searchChar, setSearchChar] = useDebounce(input, 500);
   const [offset, setOffset] = useState(0);
@@ -28,7 +26,6 @@ function App() {
         });
   console.log(data);
 
-  //fineesempio
   const [currentPage, setCurrentPage] = useState(0);
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {

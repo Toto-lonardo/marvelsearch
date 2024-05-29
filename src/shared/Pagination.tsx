@@ -3,7 +3,7 @@ import * as apiInterface from "../utils/charInterface";
 
 type PaginationProps = {
   currentPage: number;
-  pages: apiInterface.Data;
+  pages: any;
   handleClick: (number: number) => void;
 };
 
@@ -13,7 +13,7 @@ const PaginationComponent = ({
   handleClick,
 }: PaginationProps) => {
   let items = [];
-  if (!pages || !pages || !pages.total || !pages.limit) {
+  if (!pages || !pages.total || !pages.limit) {
   } else {
     const totalPages = ~~(pages.total / pages.limit);
     for (let number = 0; number <= totalPages; number++) {

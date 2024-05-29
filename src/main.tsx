@@ -10,6 +10,7 @@ import App from "./App";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetailPage from "./features/character-list/containers/CharacterDetailPage.tsx";
+import ComicPage from "./features/character-list/containers/ComicPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
   {
     path: "character/:id",
     element: <CharacterDetailPage />,
+  },
+
+  {
+    path: "comic/:id",
+    element: <ComicPage />,
   },
 ]);
 

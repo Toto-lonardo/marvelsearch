@@ -6,8 +6,13 @@ const apiurl = import.meta.env.VITE_MARVEL_API;
 
 const apikey = import.meta.env.VITE_MARVEL_API_KEY;
 
-type searchArgs = {
+type searchCharArgs = {
   searchChar: string;
+  offset: number;
+};
+
+type searchComicArgs = {
+  comicId: number;
   offset: number;
 };
 
@@ -28,10 +33,10 @@ export const apiSlice = createApi({
       }),
       fetchCharactersBySearch: builder.query<
         charApiInterfaces.ApiResponse,
-        searchArgs
+        searchCharArgs
       >({
         query(searchArgs) {
-          const { searchChar = "", offset = 0 }: searchArgs = searchArgs;
+          const { searchChar = "", offset = 0 }: searchCharArgs = searchArgs;
           return `characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`;
         },
       }),
@@ -43,12 +48,21 @@ export const apiSlice = createApi({
           return `characters/${id}?apikey=${apikey}`;
         },
       }),
-      fetchComicsCharacterById: builder.query<
+      fetchComicById: builder.query<
         comicApiInterfaces.ApiResponse,
         number | void
       >({
         query(id) {
-          return `characters/${id}/comics?apikey=${apikey}`;
+          return `comics/${id}?apikey=${apikey}`;
+        },
+      }),
+      fetchComicsCharacterById: builder.query<
+        comicApiInterfaces.ApiResponse,
+        searchComicArgs
+      >({
+        query(searchComicArgs) {
+          const { comicId = 0, offset = 0 }: searchComicArgs = searchComicArgs;
+          return `characters/${comicId}/comics?limit=20&offset=${offset}&apikey=${apikey}`;
         },
       }),
     };
@@ -60,4 +74,5 @@ export const {
   useFetchCharactersBySearchQuery,
   useFetchCharacterByIdQuery,
   useFetchComicsCharacterByIdQuery,
+  useFetchComicByIdQuery,
 } = apiSlice;
