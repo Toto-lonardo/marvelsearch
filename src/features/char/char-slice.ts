@@ -24,6 +24,7 @@ export const charSlice = createSlice({
     reset(state) {
       state.name = "";
       state.description = "";
+      state.image = "";
     },
   },
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
+import { store, persistor } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // @ts-ignore
 import Root from "./routes/root.jsx";
@@ -11,6 +11,8 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetailPage from "./features/character-list/containers/CharacterDetailPage.tsx";
 import ComicPage from "./features/character-list/containers/ComicPage.tsx";
+
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
 );
