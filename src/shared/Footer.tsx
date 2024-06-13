@@ -2,9 +2,9 @@ import { Col, Row } from "react-bootstrap";
 
 export default function Footer() {
   return (
-    <Row className="bg-danger ">
+    <Row className="bg-danger mt-4 ">
       <Col>
-        <p className="text-center my-2 text-white">
+        <p className="text-center my text-white">
           Copyright © {new Date().getFullYear()} MARVEL
         </p>
       </Col>

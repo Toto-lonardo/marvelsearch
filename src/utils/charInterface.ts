@@ -1,4 +1,4 @@
-export interface Post {
+export interface ApiResponse {
   code: number;
   status: string;
   copyright: string;
