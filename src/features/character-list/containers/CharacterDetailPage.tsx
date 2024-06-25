@@ -52,13 +52,16 @@ export default function CharacterDetailPage() {
           />
         </Col>
         <Stack className="col-md-4 m-auto ">
-          <h1 className="py-2 border-bottom border-2 border-danger">
+          <h1 className="py-2 border-bottom border-danger">
             {store.getState().char.name}
           </h1>
           <p className="mt-2 text-secondary">
             {store.getState().char.description}
           </p>
         </Stack>
+      </Row>
+      <Row className="">
+        <h2 className="text-center py-2 border-bottom border-2 border-danger" >Comics</h2>
       </Row>
       {!isFetching ? (
         <>
