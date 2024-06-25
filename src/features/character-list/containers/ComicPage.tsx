@@ -8,6 +8,7 @@ import Footer from "../../../shared/Footer";
 import * as comicApiInterfaces from "../../../utils/comicInterface";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 import Spinner from "react-bootstrap/Spinner";
@@ -41,66 +42,72 @@ export default function ComicPage() {
         </Stack>
       </Row>
       {!isFetching ? (
-        <Row className="d-flex justify-content-center">
-          <Heading title="INFO" />
-          <Col className=" m-2 d-flex flex-column justify-content-start align-items-start">
-            <h3>Authors</h3>
-            {comic?.creators.items.map(
-              (creator: comicApiInterfaces.CreatorItem) => {
-                return (
-                  <div key={creator.name}>
-                    <p className="text-capitalize">
-                      {creator.role}:{" "}
-                      <span className="fw-bold">{creator.name}</span>
+        <>
+          <Row className="d-flex justify-content-center">
+            <Heading title="INFO" />
+            <Col className=" m-2 d-flex flex-column justify-content-start align-items-start">
+              <h3>Authors</h3>
+              {comic?.creators.items.map(
+                (creator: comicApiInterfaces.CreatorItem) => {
+                  return (
+                    <div key={creator.name}>
+                      <p className="text-capitalize">
+                        {creator.role}:{" "}
+                        <span className="fw-bold">{creator.name}</span>
+                      </p>
+                      {/* <a href={`creator.resourceURI`}>More Info</a> */}
+                    </div>
+                  );
+                },
+              )}
+            </Col>
+            <Col className=" m-2 d-flex flex-column justify-content-start align-items-start">
+              <h3>Characters</h3>
+              {comic?.characters.items.map(
+                (character: comicApiInterfaces.CharItem) => {
+                  return (
+                    <p key={character.name} className="fw-bold">
+                      {character.name}
                     </p>
-                    {/* <a href={`creator.resourceURI`}>More Info</a> */}
-                  </div>
-                );
-              },
-            )}
-          </Col>
-          <Col className=" m-2 d-flex flex-column justify-content-start align-items-start">
-            <h3>Characters</h3>
-            {comic?.characters.items.map(
-              (character: comicApiInterfaces.CharItem) => {
+                  );
+                },
+              )}
+            </Col>
+            <Col className="m-2 d-flex flex-column justify-content-start align-items-start">
+              <h3>General</h3>
+              <p>
+                Pages: <span className="fw-bold">{comic?.pageCount}</span>
+              </p>
+              {comic?.dates.map(
+                (comicdates: comicApiInterfaces.Date, index: number) => {
+                  return (
+                    <div key={index}>
+                      <p className="text-capitalize">
+                        {` ${comicdates.type} : `}{" "}
+                        <span className="fw-bold">
+                          <ConvertData inputdate={comicdates.date} />
+                        </span>
+                      </p>
+                    </div>
+                  );
+                },
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              {comic?.urls.map((comicurls: comicApiInterfaces.Url) => {
                 return (
-                  <p key={character.name} className="fw-bold">
-                    {character.name}
-                  </p>
-                );
-              },
-            )}
-          </Col>
-          <Col className="m-2 d-flex flex-column justify-content-start align-items-start">
-            <h3>General</h3>
-            <p>
-              Pages: <span className="fw-bold">{comic?.pageCount}</span>
-            </p>
-            {comic?.dates.map(
-              (comicdates: comicApiInterfaces.Date, index: number) => {
-                return (
-                  <div key={index}>
-                    <p className="text-capitalize">
-                      {` ${comicdates.type} : `}{" "}
-                      <span className="fw-bold">
-                        <ConvertData inputdate={comicdates.date} />
-                      </span>
-                    </p>
-                  </div>
-                );
-              },
-            )}
-            {comic?.urls.map((comicurls: comicApiInterfaces.Url) => {
-              return (
-                <p className="text-capitalize " key={comicurls.url}>
-                  <a href={comicurls.url} className="text-danger fw-bold">
-                    {comicurls.type}
+                  <a key={comicurls.url} href={comicurls.url} className="text-danger text-capitalize fw-bold m-2">
+                    <Button variant="danger" size="lg" className="text-capitalize">
+                      {comicurls.type}
+                    </Button>
                   </a>
-                </p>
-              );
-            })}
-          </Col>
-        </Row>
+                )
+              })}
+            </Col>
+          </Row>
+        </>
       ) : (
         <Row
           style={{ minHeight: "50vh" }}
