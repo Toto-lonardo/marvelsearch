@@ -76,16 +76,27 @@ export default function ComicPage() {
             <p>
               Pages: <span className="fw-bold">{comic?.pageCount}</span>
             </p>
-            {comic?.dates.map((comicdates: comicApiInterfaces.Date) => {
+            {comic?.dates.map(
+              (comicdates: comicApiInterfaces.Date, index: number) => {
+                return (
+                  <div key={index}>
+                    <p className="text-capitalize">
+                      {` ${comicdates.type} : `}{" "}
+                      <span className="fw-bold">
+                        <ConvertData inputdate={comicdates.date} />
+                      </span>
+                    </p>
+                  </div>
+                );
+              },
+            )}
+            {comic?.urls.map((comicurls: comicApiInterfaces.Url) => {
               return (
-                <div key={comicdates.date}>
-                  <p className="text-capitalize">
-                    {` ${comicdates.type} : `}{" "}
-                    <span className="fw-bold">
-                      <ConvertData inputdate={comicdates.date} />
-                    </span>
-                  </p>
-                </div>
+                <p className="text-capitalize " key={comicurls.url}>
+                  <a href={comicurls.url} className="text-danger fw-bold">
+                    {comicurls.type}
+                  </a>
+                </p>
               );
             })}
           </Col>

@@ -6,6 +6,13 @@ export default function Footer() {
       <Col>
         <p className="text-center my text-white">
           Copyright © {new Date().getFullYear()} MARVEL
+          <br />
+          <a
+            href="http://marvel.com"
+            className="text-white text-center text-decoration-none"
+          >
+            Data provided by Marvel. © 2024 MARVEL
+          </a>
         </p>
       </Col>
     </Row>
