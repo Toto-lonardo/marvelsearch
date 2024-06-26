@@ -15,7 +15,7 @@ import CharacterGrid from "./features/character-list/components/CharacterGrid";
 
 function App() {
   const [input, setInput] = useState("");
-  const [searchChar, setSearchChar] = useDebounce(input, 500);
+  const [searchChar] = useDebounce(input, 500);
   const [offset, setOffset] = useState(0);
   const { data, isFetching } =
     searchChar == ""

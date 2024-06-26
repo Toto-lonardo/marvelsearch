@@ -1,5 +1,4 @@
 import { Row, Pagination } from "react-bootstrap";
-import * as apiInterface from "../utils/charInterface";
 
 type PaginationProps = {
   currentPage: number;

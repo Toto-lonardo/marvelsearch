@@ -2,7 +2,7 @@ import { Row, Col, Card, Button } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import * as apiInterfaces from "../../../utils/charInterface";
 import PaginationComponent from "../../../shared/Pagination";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch } from "../../../app/hooks";
 import { store } from "../../../app/store";
 import { Link } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-export const HeaderComp = (props: {}) => {
+export const HeaderComp = () => {
   return (
     <Row className="justify-content-md-center bg-danger">
       <Col className="my-2 ">
