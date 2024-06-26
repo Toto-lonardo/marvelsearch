@@ -51,7 +51,7 @@ Features:
 - Efficient Data Management: Utilize RTK Query and Redux for optimized API calls and state management.
 - Responsive Design: Enjoy a responsive and visually appealing UI with React Bootstrap.
 
-Contributing
+## Contributing
 
 We welcome contributions from the community! If you'd like to contribute, please follow these steps:
 
@@ -61,11 +61,11 @@ We welcome contributions from the community! If you'd like to contribute, please
  - Push to the branch (git push origin feature/your-feature-name).
  - Open a pull request.
 
-License
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
-Acknowledgments
+## Acknowledgments
 
     Thanks to Marvel for providing the API.
     Inspired by the amazing Marvel universe.
