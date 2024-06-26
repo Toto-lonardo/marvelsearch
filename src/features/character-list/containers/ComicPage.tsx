@@ -1,9 +1,6 @@
 import { useParams } from "react-router-dom";
 import { HeaderComp } from "../../../shared/HeaderComp";
-import {
-  useFetchComicByIdQuery,
-  // useFetchComicsCharacterByIdQuery,
-} from "../../characters/characters-api-slice";
+import { useFetchComicByIdQuery } from "../../characters/characters-api-slice";
 import Footer from "../../../shared/Footer";
 import * as comicApiInterfaces from "../../../utils/comicInterface";
 import Col from "react-bootstrap/Col";
@@ -95,15 +92,23 @@ export default function ComicPage() {
             </Col>
           </Row>
           <Row>
-            <Col className="d-flex justify-content-center align-items-center">
+            <Col className="d-flex justify-content-center align-items-center flex-wrap flex-lg-nowrap">
               {comic?.urls.map((comicurls: comicApiInterfaces.Url) => {
                 return (
-                  <a key={comicurls.url} href={comicurls.url} className="text-danger text-capitalize fw-bold m-2">
-                    <Button variant="danger" size="lg" className="text-capitalize">
+                  <a
+                    key={comicurls.url}
+                    href={comicurls.url}
+                    className="text-danger text-capitalize fw-bold m-2"
+                  >
+                    <Button
+                      variant="danger"
+                      size="lg"
+                      className="text-capitalize  "
+                    >
                       {comicurls.type}
                     </Button>
                   </a>
-                )
+                );
               })}
             </Col>
           </Row>

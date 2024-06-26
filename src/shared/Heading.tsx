@@ -4,7 +4,9 @@ type title = {
 
 export default function Heading({ title }: title) {
   return (
-    <h2 className="text-center p-2 text-danger border shadow ">{title}</h2>
+    <h2 className="text-center p-2 text-danger border-bottom border-2 ">
+      {title}
+    </h2>
   );
 }
 
