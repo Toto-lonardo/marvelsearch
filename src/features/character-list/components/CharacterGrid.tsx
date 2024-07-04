@@ -5,6 +5,7 @@ import PaginationComponent from "../../../shared/Pagination";
 import { useAppDispatch } from "../../../app/hooks";
 import { store } from "../../../app/store";
 import { Link } from "react-router-dom";
+import { SerializedError } from "@reduxjs/toolkit";
 
 type charInfoType = {
   name: string;
@@ -12,11 +13,17 @@ type charInfoType = {
   image: string;
 };
 
+type errorFetch = {
+  status: string | undefined;
+  error: string | undefined;
+};
+
 type CharacterGridsProps = {
   data: apiInterfaces.Data | undefined;
   handleClick: (number: number) => void;
   isFetching: boolean;
   currentPage: number;
+  error: errorFetch;
 };
 
 const CharacterGrid = ({
@@ -24,6 +31,7 @@ const CharacterGrid = ({
   handleClick,
   isFetching,
   currentPage,
+  error,
 }: CharacterGridsProps) => {
   const dispatch = useAppDispatch();
   function saveCharInfo(charInfo: charInfoType) {
@@ -50,6 +58,7 @@ const CharacterGrid = ({
     saveCharInfo(charInfo);
   }
   console.log("Selezionato", store.getState().char);
+  console.log("Errore", error);
   return (
     <Row className=" justify-content-center ">
       {data && !isFetching ? (
@@ -121,10 +130,41 @@ const CharacterGrid = ({
           )}
         </>
       ) : (
-        <Row className="d-flex justify-content-center align-items-center min-vh-100">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+        <Row className="d-flex justify-content-center align-items-center min-vh-100 m-2 ">
+          {!error ? (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <>
+              <Col className="bg-hulk text-white d-flex min-vh-100 flex-column justify-content-center align-items-center">
+                {/* <picture> */}
+                {/*   <source */}
+                {/*     srcSet="https://cdn.marvel.com/content/1x/006hbb_com_mas_dsk_01_5.jpg" */}
+                {/*     media="(min-width: 839px)" */}
+                {/*   /> */}
+                {/*   <source srcSet="https://cdn.marvel.com/content/1x/006hbb_com_mas_mob_01_0_3.jpg" /> */}
+                {/*   <img */}
+                {/*     src="https://cdn.marvel.com/content/1x/006hbb_com_mas_dsk_01_5.jpg" */}
+                {/*     className="img-fluid" */}
+                {/*     alt="Hulk In Comics" */}
+                {/*     loading="lazy" */}
+                {/*   /> */}
+                {/* </picture> */}
+                <h2 className="display-4 m-4 text-center  d-flex justify-content-center align-items-center">
+                  Uh-oh! It seems the Hulk got a little too angry and smashed
+                  something in the server room.
+                  <br />
+                  Our tech heroes are on it! Please try again later!
+                </h2>
+                <p className="m-1">
+                  <small>
+                    Error: {error.error} {error.status}
+                  </small>
+                </p>
+              </Col>
+            </>
+          )}
         </Row>
       )}
     </Row>

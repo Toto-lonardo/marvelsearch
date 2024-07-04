@@ -20,6 +20,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: apiurl,
+    timeout: 10000,
   }),
   endpoints(builder) {
     return {

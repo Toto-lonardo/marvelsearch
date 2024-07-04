@@ -17,7 +17,7 @@ function App() {
   const [input, setInput] = useState("");
   const [searchChar] = useDebounce(input, 500);
   const [offset, setOffset] = useState(0);
-  const { data, isFetching } =
+  const { data, isFetching, error } =
     searchChar == ""
       ? useFetchCharactersQuery(offset)
       : useFetchCharactersBySearchQuery({
@@ -57,6 +57,7 @@ function App() {
           data={data?.data}
           isFetching={isFetching}
           currentPage={currentPage}
+          error={error}
         />
         <Footer />
       </Container>

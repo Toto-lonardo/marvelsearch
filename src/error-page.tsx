@@ -19,11 +19,17 @@ export default function ErrorPage() {
   }
 
   return (
-    <div id="error-page">
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+    <div
+      id="error-page"
+      className="d-flex flex-column justify-content-center align-items-center min-vh-100 text-cwhite"
+    >
+      <h1 className="mb-4">Error 404: Page not found</h1>
+      <p className="fw-bold">Looks like Thanos snapped his fingers again!</p>
       <p>
-        <i>{errorMessage}</i>
+        The page you're looking for has vanished into the Marvel Multiverse.
+      </p>
+      <p>
+        <i className="">{errorMessage}</i>
       </p>
     </div>
   );
