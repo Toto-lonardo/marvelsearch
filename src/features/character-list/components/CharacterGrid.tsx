@@ -5,6 +5,7 @@ import PaginationComponent from "../../../shared/Pagination";
 import { useAppDispatch } from "../../../app/hooks";
 import { store } from "../../../app/store";
 import { Link } from "react-router-dom";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
 type charInfoType = {
@@ -13,18 +14,19 @@ type charInfoType = {
   image: string;
 };
 
-type errorFetch = {
-  status: string | undefined;
-  error: string | undefined;
-};
-
 type CharacterGridsProps = {
   data: apiInterfaces.Data | undefined;
   handleClick: (number: number) => void;
   isFetching: boolean;
   currentPage: number;
-  error: errorFetch;
+  error: FetchBaseQueryError | SerializedError | undefined;
 };
+
+// interface CustomFetchBaseQueryError extends FetchBaseQueryError {
+//   data: {
+//     message?: string;
+//   };
+// }
 
 const CharacterGrid = ({
   data,
@@ -57,8 +59,21 @@ const CharacterGrid = ({
         });
     saveCharInfo(charInfo);
   }
+  // Check typeof Error TODO REFACTOR
+  let errorMessage = "";
+  if (error !== undefined) {
+    if ("status" in error) {
+      const fetchError = error as FetchBaseQueryError & {
+        data: { message?: string };
+      };
+      errorMessage = `Error ${fetchError.status} - ${fetchError.data?.message || "No error message is available"}`;
+    } else {
+      errorMessage = (error as Error).message || "Unkown Error";
+    }
+  }
   console.log("Selezionato", store.getState().char);
   console.log("Errore", error);
+
   return (
     <Row className=" justify-content-center ">
       {data && !isFetching ? (
@@ -157,11 +172,11 @@ const CharacterGrid = ({
                   <br />
                   Our tech heroes are on it! Please try again later!
                 </h2>
-                <p className="m-1">
-                  <small>
-                    Error: {error.error} {error.status}
-                  </small>
-                </p>
+                {errorMessage ? (
+                  <div>{errorMessage}</div>
+                ) : (
+                  <div>{JSON.stringify(data)}</div>
+                )}
               </Col>
             </>
           )}
