@@ -36,8 +36,8 @@ export interface Result {
   urls: Url[];
   series: Series;
   variants: Variant[];
-  collections: any[];
-  collectedIssues: any[];
+  collections: ComicSummary[];
+  collectedIssues: ComicSummary[];
   dates: Date[];
   prices: Price[];
   thumbnail: Thumbnail;
@@ -46,6 +46,11 @@ export interface Result {
   characters: Characters;
   stories: Stories;
   events: Events;
+}
+
+export interface ComicSummary {
+  resourceURI?: string; // The path to the individual comic resource.
+  name?: string; // The canonical name of the comic.
 }
 
 export interface TextObject {
@@ -130,6 +135,10 @@ export interface StoriesItem {
 export interface Events {
   available: number;
   collectionURI: string;
-  items: any[];
+  items: EventSummary[];
   returned: number;
+}
+export interface EventSummary {
+  resourceURI?: string; // The path to the individual event resource.
+  name?: string; // The name of the event.
 }

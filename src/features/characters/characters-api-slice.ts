@@ -20,25 +20,21 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: apiurl,
-    timeout: 10000,
+    timeout: 100000,
   }),
   endpoints(builder) {
     return {
       fetchCharacters: builder.query<
         charApiInterfaces.ApiResponse,
-        number | void
-      >({
-        query(offset = 0) {
-          return `characters?&limit=20&offset=${offset}&apikey=${apikey}`;
-        },
-      }),
-      fetchCharactersBySearch: builder.query<
-        charApiInterfaces.ApiResponse,
         searchCharArgs
       >({
         query(searchArgs) {
           const { searchChar = "", offset = 0 }: searchCharArgs = searchArgs;
-          return `characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`;
+          if (searchChar === "") {
+            return `characters?&limit=20&offset=${offset}&apikey=${apikey}`;
+          } else {
+            return `characters?nameStartsWith=${searchChar}&limit=20&offset=${offset}&apikey=${apikey}`;
+          }
         },
       }),
       fetchCharacterById: builder.query<
@@ -72,7 +68,6 @@ export const apiSlice = createApi({
 
 export const {
   useFetchCharactersQuery,
-  useFetchCharactersBySearchQuery,
   useFetchCharacterByIdQuery,
   useFetchComicsCharacterByIdQuery,
   useFetchComicByIdQuery,

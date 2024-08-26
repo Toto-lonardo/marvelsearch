@@ -9,6 +9,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
 type charInfoType = {
+  id: number;
   name: string;
   description: string;
   image: string;
@@ -45,6 +46,7 @@ const CharacterGrid = ({
 
   function charHandleClick(character: number) {
     let charInfo: charInfoType = {
+      id: 0,
       name: "",
       description: "",
       image: "",
@@ -53,6 +55,7 @@ const CharacterGrid = ({
     !filterChar?.length
       ? resetCharinfo()
       : (charInfo = {
+          id: filterChar[0].id,
           name: filterChar[0].name,
           description: filterChar[0].description,
           image: `${filterChar[0].thumbnail.path}.${filterChar[0].thumbnail.extension}`,
@@ -72,7 +75,7 @@ const CharacterGrid = ({
     }
   }
   console.log("Selezionato", store.getState().char);
-  console.log("Errore", error);
+  // console.log("Errore", error);
 
   return (
     <Row className=" justify-content-center ">

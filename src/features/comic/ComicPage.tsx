@@ -1,16 +1,16 @@
-import { useParams } from "react-router-dom";
-import { HeaderComp } from "../../../shared/HeaderComp";
-import { useFetchComicByIdQuery } from "../../characters/characters-api-slice";
-import Footer from "../../../shared/Footer";
-import * as comicApiInterfaces from "../../../utils/comicInterface";
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Stack from "react-bootstrap/Stack";
 import Spinner from "react-bootstrap/Spinner";
-import Heading from "../../../shared/Heading";
-import ConvertData from "../../../utils/convertData";
+import Stack from "react-bootstrap/Stack";
+import { useParams } from "react-router-dom";
+import Footer from "../../shared/Footer";
+import { HeaderComp } from "../../shared/HeaderComp";
+import Heading from "../../shared/Heading";
+import ConvertData from "../../utils/convertData";
+import { useFetchComicByIdQuery } from "../characters/characters-api-slice";
+import * as comicApiInterfaces from "../../utils/comicInterface";
 
 export default function ComicPage() {
   const { id } = useParams();

@@ -6,12 +6,11 @@ import * as comicApiInterfaces from "../../../utils/comicInterface";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
-import { store } from "../../../app/store";
-import Stack from "react-bootstrap/Stack";
 import Spinner from "react-bootstrap/Spinner";
 import { Button } from "react-bootstrap";
 import PaginationComponent from "../../../shared/Pagination";
 import { useState } from "react";
+import HeaderCharPage from "../components/HeaderCharPage";
 
 export default function CharacterDetailPage() {
   const [offset, setOffset] = useState(0);
@@ -22,16 +21,11 @@ export default function CharacterDetailPage() {
     comicId,
     offset,
   });
-  console.log(data);
-
-  function comicHandleClick(comicId: number) {
-    console.log(comicId);
-  }
 
   function handleClick(number: number) {
     if (number != currentPage) {
       setCurrentPage(number);
-      let limitPost = Number(data?.data.limit);
+      const limitPost = Number(data?.data.limit);
       setOffset(number * limitPost);
       return number;
     } else {
@@ -42,26 +36,11 @@ export default function CharacterDetailPage() {
   return (
     <>
       <HeaderComp />
-      <Row className="p-4 m-4 ">
-        <Col>
-          <Image
-            src={store.getState().char.image}
-            className="img-fluid shadow "
-            width={800}
-            thumbnail
-          />
-        </Col>
-        <Stack className="col-md-4 m-auto ">
-          <h1 className="py-2 border-bottom border-danger">
-            {store.getState().char.name}
-          </h1>
-          <p className="mt-2 text-secondary">
-            {store.getState().char.description}
-          </p>
-        </Stack>
-      </Row>
+      <HeaderCharPage />
       <Row className="">
-        <h2 className="text-center py-2 border-bottom border-2 border-danger" >Comics</h2>
+        <h2 className="text-center py-2 border-bottom border-2 border-danger">
+          Comics
+        </h2>
       </Row>
       {!isFetching ? (
         <>
@@ -88,7 +67,6 @@ export default function CharacterDetailPage() {
                         variant="danger"
                         value={comic.id}
                         className="shadow-sm m-2 rounded"
-                        onClick={() => comicHandleClick(comic.id)}
                       >
                         Learn more
                       </Button>

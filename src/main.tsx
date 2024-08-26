@@ -3,14 +3,12 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store, persistor } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// @ts-ignore
-import Root from "./routes/root.jsx";
 import ErrorPage from "./error-page.tsx";
 import App from "./App";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetailPage from "./features/character-list/containers/CharacterDetailPage.tsx";
-import ComicPage from "./features/character-list/containers/ComicPage.tsx";
+import ComicPage from "./features/comic/ComicPage.tsx";
 
 import { PersistGate } from "redux-persist/integration/react";
 
