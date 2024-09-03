@@ -13,19 +13,28 @@ const HeaderCharPage = () => {
 
   const storeId = Number(store.getState().char.id) | 0;
   console.log("storeID", storeId);
-  let headerChar = {};
-  convertComicId === storeId
-    ? (headerChar = store.getState().char)
-    : (headerChar = undefined);
+  let headerChar = {
+    image: "",
+    name: "",
+    description: "",
+  };
+  let isFetched = false;
+  if (convertComicId === storeId) {
+    headerChar = store.getState().char;
+  } else {
+    if (data) {
+      isFetched = true;
+    }
+  }
 
   console.log("headerChar", headerChar);
   return (
     <Row className="p-4 m-4 ">
-      {headerChar && (
+      {!isFetched && headerChar && (
         <>
           <Col>
             <Image
-              src={headerChar.image}
+              src={headerChar?.image}
               className="img-fluid shadow "
               width={800}
               thumbnail
@@ -39,7 +48,7 @@ const HeaderCharPage = () => {
           </Stack>
         </>
       )}
-      {!headerChar && (
+      {isFetched && (
         <>
           <Col>
             <Image

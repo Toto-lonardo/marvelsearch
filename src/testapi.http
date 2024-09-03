@@ -1,2 +1,0 @@
-GET https://gateway.marvel.com:443/v1/public/characters?name=wolverine&orderBy=name&limit=10&apikey=14298d1beedc06f48b50092d2798b0e0
-accept : application/json

@@ -2,7 +2,7 @@ import { Row, Pagination } from "react-bootstrap";
 
 type PaginationProps = {
   currentPage: number;
-  pages: { total: number; limit: number };
+  pages: { total: number; limit: number } | undefined;
   handleClick: (number: number) => void;
 };
 
