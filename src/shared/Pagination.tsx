@@ -2,7 +2,7 @@ import { Row, Pagination } from "react-bootstrap";
 
 type PaginationProps = {
   currentPage: number;
-  pages: any;
+  pages: { total: number; limit: number } | undefined;
   handleClick: (number: number) => void;
 };
 
@@ -11,9 +11,8 @@ const PaginationComponent = ({
   pages,
   handleClick,
 }: PaginationProps) => {
-  let items = [];
-  if (!pages || !pages.total || !pages.limit) {
-  } else {
+  const items = [];
+  if (pages) {
     const totalPages = ~~(pages.total / pages.limit);
     for (let number = 0; number <= totalPages; number++) {
       items.push(

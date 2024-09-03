@@ -3,13 +3,8 @@ import { useDebounce } from "use-debounce";
 import Footer from "./shared/Footer";
 import "./App.css";
 import { HeaderComp } from "./shared/HeaderComp";
-
 import { Container, Row } from "react-bootstrap";
-
-import {
-  useFetchCharactersBySearchQuery,
-  useFetchCharactersQuery,
-} from "./features/characters/characters-api-slice";
+import { useFetchCharactersQuery } from "./features/characters/characters-api-slice";
 import SearchInput from "./features/character-list/components/SearchInput";
 import CharacterGrid from "./features/character-list/components/CharacterGrid";
 
@@ -17,16 +12,13 @@ function App() {
   const [input, setInput] = useState("");
   const [searchChar] = useDebounce(input, 500);
   const [offset, setOffset] = useState(0);
-  const { data, isFetching, error } =
-    searchChar == ""
-      ? useFetchCharactersQuery(offset)
-      : useFetchCharactersBySearchQuery({
-          searchChar: searchChar,
-          offset: offset,
-        });
-  console.log(data);
-
   const [currentPage, setCurrentPage] = useState(0);
+
+  const { data, isFetching, error } = useFetchCharactersQuery({
+    searchChar: searchChar,
+    offset: offset,
+  });
+  console.log(data);
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     setInput(e.target.value);
@@ -37,11 +29,8 @@ function App() {
   function handleClick(number: number) {
     if (number != currentPage) {
       setCurrentPage(number);
-      let limitPost = Number(data?.data.limit);
+      const limitPost = Number(data?.data.limit);
       setOffset(number * limitPost);
-      return number;
-    } else {
-      return;
     }
   }
   return (
